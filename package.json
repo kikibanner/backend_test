@@ -9,7 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:ui": "rm -rf build && cd ../../osa2/materiaali/notes-new && npm run build --prod && cp -r build ../../../osa3/notes-backend/",
     "deploy": "git push heroku master",
-    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && npm run deploy",    
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && npm run deploy",
     "logs:prod": "heroku logs --tail"
   },
   "author": "kikibanner",
@@ -19,7 +19,9 @@
     "express": "^4.17.1",
     "git": "^0.1.5",
     "github": "^14.0.0",
-    "heroku": "^7.47.0"
+    "heroku": "^7.47.0",
+    "mongodb": "^3.6.2",
+    "mongoose": "^5.10.12"
   },
   "devDependencies": {
     "nodemon": "^2.0.6"

@@ -7,6 +7,31 @@ app.use(express.static('build'))
 app.use(cors())
 app.use(express.json())
 
+const mongoose = require('mongoose')
+
+// DO NOT SAVE YOUR PASSWORD TO GITHUB!!
+const url =
+  `mongodb+srv://fullstack:454545@cluster0.0leqh.mongodb.net/note-app?retryWrites=true&w=majority`
+
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
+
+const noteSchema = new mongoose.Schema({
+  content: String,
+  date: Date,
+  important: Boolean,
+})
+
+noteSchema.set('toJSON', {
+    transform: (document, returnedObject) => {
+      returnedObject.id = returnedObject._id.toString()
+      delete returnedObject._id
+      delete returnedObject.__v
+    }
+})
+
+const Note = mongoose.model('Note', noteSchema)
+
+
 let notes = [
     {
       id: 1,
@@ -33,7 +58,9 @@ app.get('/', (request, response) => {
 })
 
 app.get('/api/notes', (request, response) => {
-  response.json(notes)
+    Note.find({}).then(notes => {
+      response.json(notes)
+    })
 })
 
 //fetch data
